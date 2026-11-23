@@ -8,11 +8,23 @@ UI text is in Serbian (Latin script). Code, comments and variable names in Engli
 - config/db.php – PDO ($pdo), loads config/config.local.php (gitignored)
 - includes/init.php – every page starts with require_once of this (session, db, helpers, auth)
 - includes/functions.php – e(), url(), redirect(), csrf_field(), verify_csrf(), flash(), old(),
-  cover_url() (cover_path = file name in public/uploads/covers, NULL → placeholder), status_label()
+  cover_url() (cover_path = file name in public/uploads/covers, NULL → placeholder), status_label(),
+  ENTRY_STATUSES, empty_to_null(), format_date(), not_found() (404 page + exit),
+  query_str($key, $default) / query_int($key, $default) – the only way pages read $_GET
+  (arrays like ?q[]=x fall back to the default; query_int accepts whole numbers >= 1 only)
+- includes/footer.php loads public/js/app.js on every page (data-confirm="..." on a form = confirm() before submit);
+  pages can set $pageScripts = [...] for extra scripts
 - includes/auth.php – current_user(), is_logged_in(), has_role(), require_login(), require_role(), login_user()
 - includes/header.php / footer.php – layout; pages set $pageTitle before including header
+- Root pages:
+  - index.php, register.php, login.php, logout.php (POST), profile_edit.php
+  - catalog.php (filters + pagination), game.php?id= (detail + reviews)
+  - library.php?status= (own entries, tabs per status)
+  - entry_form.php?game_id= (add) / ?id= (edit own entry), entry_delete.php (POST, own entry only)
 - admin/ – moderator + admin pages, api/ – JSON endpoints (stats, export)
-- public/css, public/js, public/uploads/covers (uploads gitignored)
+- public/css/style.css – all styles
+- public/js/app.js – every page: data-confirm forms; public/js/entry_form.js – show/hide fields by status (UX only)
+- public/img/placeholder.svg – cover when cover_path is NULL; public/uploads/covers (uploads gitignored)
 - sql/schema.sql, sql/seed.sql – schema + test data (all test users: password123)
 
 ## Database

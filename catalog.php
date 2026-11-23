@@ -4,12 +4,12 @@ require_once __DIR__ . '/includes/init.php';
 $perPage = 12;
 
 // ---------- 1. Read filters from the URL (GET) ----------
-$q        = trim($_GET['q'] ?? '');
-$genreId  = (int) ($_GET['genre'] ?? 0);      // 0 = no filter
-$platform = (int) ($_GET['platform'] ?? 0);
-$year     = (int) ($_GET['year'] ?? 0);
-$sort     = $_GET['sort'] ?? 'title';
-$page     = max(1, (int) ($_GET['page'] ?? 1));
+$q        = query_str('q');
+$genreId  = query_int('genre');      // 0 = no filter
+$platform = query_int('platform');
+$year     = query_int('year');
+$sort     = query_str('sort', 'title');
+$page     = query_int('page', 1);
 
 // Allowed sort options. User input only picks a key – the SQL text comes from this array.
 $sortOptions = [

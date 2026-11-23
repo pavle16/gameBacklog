@@ -2,11 +2,11 @@
 require_once __DIR__ . '/includes/init.php';
 
 // ---------- 1. Validate id and load the game ----------
-// FILTER_VALIDATE_INT returns false for "abc", "1.5", "-3", missing id...
-$id = filter_var($_GET['id'] ?? '', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+// query_int() returns 0 for "abc", "1.5", "-3", a missing id...
+$id = query_int('id');
 
 $game = null;
-if ($id !== false) {
+if ($id > 0) {
     $stmt = $pdo->prepare("
         SELECT g.id, g.title, g.release_year, g.description, g.cover_path,
                (SELECT ROUND(AVG(e.rating), 1)
@@ -22,18 +22,7 @@ if ($id !== false) {
 }
 
 if (!$game) {
-    http_response_code(404);
-    $pageTitle = 'Igra nije pronađena';
-    require __DIR__ . '/includes/header.php';
-    ?>
-    <h1>Igra nije pronađena</h1>
-    <div class="empty-state">
-        <p>Tražena igra ne postoji ili je uklonjena.</p>
-        <a href="<?= url('catalog.php') ?>">Nazad na katalog</a>
-    </div>
-    <?php
-    require __DIR__ . '/includes/footer.php';
-    exit;
+    not_found('Tražena igra ne postoji ili je uklonjena.');
 }
 
 // ---------- 2. Genres and platforms ----------
@@ -68,7 +57,7 @@ $reviews = $stmt->fetchAll();
 // ---------- 4. Does the logged-in user already have this game? ----------
 $myEntry = null;
 if ($user = current_user()) {
-    $stmt = $pdo->prepare('SELECT status FROM entries WHERE user_id = ? AND game_id = ?');
+    $stmt = $pdo->prepare('SELECT id, status FROM entries WHERE user_id = ? AND game_id = ?');
     $stmt->execute([$user['id'], $game['id']]);
     $myEntry = $stmt->fetch() ?: null;
 }
@@ -114,9 +103,9 @@ require __DIR__ . '/includes/header.php';
                 <?php if ($myEntry): ?>
                     <span class="meta">U vašoj biblioteci:</span>
                     <span class="status status-<?= e($myEntry['status']) ?>"><?= e(status_label($myEntry['status'])) ?></span>
+                    <a class="btn btn-secondary btn-small" href="<?= url('entry_form.php?id=' . $myEntry['id']) ?>">Izmeni</a>
                 <?php else: ?>
-                    <!-- Placeholder: becomes a POST form in Phase 4 -->
-                    <button type="button" disabled title="Uskoro">Dodaj u biblioteku</button>
+                    <a class="btn" href="<?= url('entry_form.php?game_id=' . $game['id']) ?>">Dodaj u biblioteku</a>
                 <?php endif; ?>
             </div>
         <?php endif; ?>

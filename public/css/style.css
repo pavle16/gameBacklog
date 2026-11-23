@@ -498,6 +498,85 @@ th {
 td { padding: .7rem .9rem; border-top: 1px dashed var(--ink-3); }
 tr:hover td { background: rgba(242, 177, 52, .06); }
 
+/* ---------- Entry form ---------- */
+
+/* the hidden attribute must win over ".form label { display: flex }" */
+.form [hidden] { display: none; }
+
+.form-wide { max-width: 640px; }
+.form-actions { display: flex; align-items: center; gap: 1.2rem; }
+
+.entry-header {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  margin-bottom: 1.8rem;
+}
+.entry-header img {
+  width: 96px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border: 2px solid #000;
+  box-shadow: var(--shadow);
+}
+.entry-header h1 { margin: .2rem 0 0; }
+.entry-header h1 a { color: var(--paper); text-decoration: none; }
+.entry-header h1 a:hover { color: var(--mustard); }
+
+.danger-zone { margin-top: 2.5rem; }
+
+.btn-small,
+button.btn-small {
+  padding: .3rem .65rem;
+  font-size: .75rem;
+  box-shadow: 2px 2px 0 #000;
+}
+
+/* ---------- Library ---------- */
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.tabs a {
+  display: block;
+  padding: .45rem .9rem;
+  color: var(--paper);
+  text-decoration: none;
+  background: var(--ink-2);
+  border: 2px solid #000;
+}
+.tabs a:hover { background: var(--mustard); color: var(--ink); }
+.tabs a.active { background: var(--tomato); color: var(--ink); box-shadow: var(--shadow); }
+.tabs .count { opacity: .65; margin-left: .3rem; }
+
+/* tables scroll sideways on small screens instead of breaking the page */
+.table-wrap { overflow-x: auto; padding: 0 6px 6px 0; }
+
+.entry-title {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  min-width: 12rem;
+}
+.entry-thumb {
+  width: 40px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border: 1px solid #000;
+  flex-shrink: 0;
+}
+.row-actions { display: flex; align-items: center; gap: .5rem; white-space: nowrap; }
+
 /* ---------- Footer ---------- */
 
 .site-footer {
