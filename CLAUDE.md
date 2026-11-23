@@ -7,7 +7,8 @@ UI text is in Serbian (Latin script). Code, comments and variable names in Engli
 ## Structure
 - config/db.php – PDO ($pdo), loads config/config.local.php (gitignored)
 - includes/init.php – every page starts with require_once of this (session, db, helpers, auth)
-- includes/functions.php – e(), url(), redirect(), csrf_field(), verify_csrf(), flash(), old()
+- includes/functions.php – e(), url(), redirect(), csrf_field(), verify_csrf(), flash(), old(),
+  cover_url() (cover_path = file name in public/uploads/covers, NULL → placeholder), status_label()
 - includes/auth.php – current_user(), is_logged_in(), has_role(), require_login(), require_role(), login_user()
 - includes/header.php / footer.php – layout; pages set $pageTitle before including header
 - admin/ – moderator + admin pages, api/ – JSON endpoints (stats, export)

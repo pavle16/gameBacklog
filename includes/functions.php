@@ -48,3 +48,23 @@ function get_flashes(): array {
 function old(string $key): string {
     return e($_POST[$key] ?? '');
 }
+
+// ---------- Games ----------
+
+// cover_path stores only the file name (e.g. "witcher3.jpg"); NULL means no cover
+function cover_url(?string $coverPath): string {
+    return $coverPath
+        ? url('public/uploads/covers/' . $coverPath)
+        : url('public/img/placeholder.svg');
+}
+
+// Serbian label for an entries.status value
+function status_label(string $status): string {
+    $labels = [
+        'backlog'   => 'Na listi',
+        'playing'   => 'Igram',
+        'completed' => 'Završeno',
+        'dropped'   => 'Odustao',
+    ];
+    return $labels[$status] ?? $status;
+}
