@@ -1,0 +1,19 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; background: #14161a; color: #e6e6e6; }
+a { color: #7cb7ff; }
+.site-header { display: flex; justify-content: space-between; align-items: center;
+               padding: 1rem 2rem; background: #1d2026; border-bottom: 1px solid #2c3038; }
+.site-header nav { display: flex; gap: 1rem; align-items: center; }
+.logo { font-weight: 700; font-size: 1.2rem; text-decoration: none; color: #fff; }
+.container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+.form { display: flex; flex-direction: column; gap: 1rem; max-width: 400px; }
+.form label { display: flex; flex-direction: column; gap: .3rem; }
+input, select, textarea, button { font: inherit; padding: .5rem; border-radius: 6px; border: 1px solid #3a3f49;
+                                  background: #1d2026; color: inherit; }
+button { background: #3d7be0; border: none; cursor: pointer; color: #fff; }
+.inline { display: inline; }
+.link-btn { background: none; color: #7cb7ff; padding: 0; text-decoration: underline; }
+.flash { padding: .75rem 1rem; border-radius: 6px; margin-bottom: 1rem; }
+.flash-success { background: #1f3d2a; border: 1px solid #2f6b44; }
+.flash-error { background: #4a1f24; border: 1px solid #7a2f37; }
+.site-footer { text-align: center; color: #777; padding: 2rem; }
