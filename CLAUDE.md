@@ -9,15 +9,20 @@ UI text is in Serbian (Latin script). Code, comments and variable names in Engli
 - includes/init.php – every page starts with require_once of this (session, db, helpers, auth)
 - includes/functions.php – e(), url(), redirect(), csrf_field(), verify_csrf(), flash(), old(),
   cover_url() (cover_path = file name in public/uploads/covers, NULL → placeholder), status_label(),
-  ENTRY_STATUSES, empty_to_null(), format_date(), not_found() (404 page + exit),
+  ENTRY_STATUSES, status_tabs() (['all' => 'Sve', status => label...], also a whitelist for ?status=),
+  empty_to_null(), format_date(), not_found() (404 page + exit),
   query_str($key, $default) / query_int($key, $default) – the only way pages read $_GET
   (arrays like ?q[]=x fall back to the default; query_int accepts whole numbers >= 1 only)
 - includes/footer.php loads public/js/app.js on every page (data-confirm="..." on a form = confirm() before submit);
   pages can set $pageScripts = [...] for extra scripts
 - includes/auth.php – current_user(), is_logged_in(), has_role(), require_login(), require_role(), login_user()
-- includes/header.php / footer.php – layout; pages set $pageTitle before including header
+- includes/header.php / footer.php – layout; pages set $pageTitle before including header.
+  Nav for logged-in users: username -> profile.php?u=<own username>, "Podešavanja" -> profile_edit.php
 - Root pages:
-  - index.php, register.php, login.php, logout.php (POST), profile_edit.php
+  - index.php, register.php, login.php, logout.php (POST), profile_edit.php (settings)
+  - profile.php?u=username&status= – public profile, guests allowed. Privacy rule: if is_public = 0, only the
+    owner and admins see it; everyone else gets username + "Ovaj profil je privatan." and nothing else is queried.
+    Read-only library + reviews; NEVER select or show entries.notes outside entry_form.php
   - catalog.php (filters + pagination), game.php?id= (detail + reviews)
   - library.php?status= (own entries, tabs per status)
   - entry_form.php?game_id= (add) / ?id= (edit own entry), entry_delete.php (POST, own entry only)
@@ -26,6 +31,8 @@ UI text is in Serbian (Latin script). Code, comments and variable names in Engli
 - public/js/app.js – every page: data-confirm forms; public/js/entry_form.js – show/hide fields by status (UX only)
 - public/img/placeholder.svg – cover when cover_path is NULL; public/uploads/covers (uploads gitignored)
 - sql/schema.sql, sql/seed.sql – schema + test data (all test users: password123)
+- docs/vodic-kroz-kod.html – study guide for the defense (Serbian, print to PDF with Ctrl+P);
+  update it when pages, queries or helpers change. docs/er-diagram.png – ER diagram
 
 ## Database
 users(id, username, email, password_hash, role ENUM user/moderator/admin, is_public, created_at)

@@ -20,7 +20,8 @@
             <?php if (has_role('admin')): ?>
                 <a href="<?= url('admin/users.php') ?>">Administracija</a>
             <?php endif; ?>
-            <a href="<?= url('profile_edit.php') ?>"><?= e($user['username']) ?></a>
+            <a href="<?= url('profile.php?u=' . urlencode($user['username'])) ?>"><?= e($user['username']) ?></a>
+            <a href="<?= url('profile_edit.php') ?>">Podešavanja</a>
             <form method="post" action="<?= url('logout.php') ?>" class="inline">
                 <?= csrf_field() ?>
                 <button type="submit" class="link-btn">Odjava</button>

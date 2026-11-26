@@ -5,10 +5,7 @@ require_login();
 $user = current_user();
 
 // ---------- 1. Tabs: "all" + one per status ----------
-$tabs = ['all' => 'Sve'];
-foreach (ENTRY_STATUSES as $s) {
-    $tabs[$s] = status_label($s);
-}
+$tabs = status_tabs();
 // Unknown value -> show "Sve", no error
 $tab = query_str('status', 'all');
 if (!isset($tabs[$tab])) {

@@ -88,6 +88,16 @@ function status_label(string $status): string {
     return $labels[$status] ?? $status;
 }
 
+// Tabs for a library list: ['all' => 'Sve', 'backlog' => 'Na listi', ...]
+// Also works as a whitelist: isset($tabs[$value]) means the value is allowed.
+function status_tabs(): array {
+    $tabs = ['all' => 'Sve'];
+    foreach (ENTRY_STATUSES as $s) {
+        $tabs[$s] = status_label($s);
+    }
+    return $tabs;
+}
+
 // ---------- Small helpers ----------
 
 // Empty form value -> NULL in the database (instead of saving '')
